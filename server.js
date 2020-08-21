@@ -18,6 +18,12 @@ let colors = [
     id: 1
   },
   {
+    color: 'black',
+    code: {
+      hex: "#000"
+    }
+  },
+  {
     color: "limegreen",
     code: {
       hex: "#99ddbc"

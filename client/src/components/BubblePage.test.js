@@ -1,98 +1,95 @@
-import React from "react";
-import { render, screen } from "@testing-library/react";
-import BubblePage from "./BubblePage";
+import React from 'react';
+import BubblePage from '../components/BubblePage';
+import {render, screen, waitFor} from '@testing-library/react';
+import userEvent from "@testing-library/user-event";
+import axiosWithAuth from './utils/axiosWithAuth'
 
 let colors = [
   {
-    color: "aliceblue",
+    color: 'aliceblue',
     code: {
-      hex: "#f0f8ff"
+      hex: '#f0f8ff'
     },
     id: 1
   },
   {
-    color: "limegreen",
+    color: 'limegreen',
     code: {
-      hex: "#99ddbc"
+      hex: '#99ddbc'
     },
     id: 2
   },
   {
-    color: "aqua",
+    color: 'aqua',
     code: {
-      hex: "#00ffff"
+      hex: '#00ffff'
     },
     id: 3
   },
   {
-    color: "aquamarine",
+    color: 'aquamarine',
     code: {
-      hex: "#7fffd4"
+      hex: '#7fffd4'
     },
     id: 4
   },
   {
-    color: "lilac",
+    color: 'lilac',
     code: {
-      hex: "#9a99dd"
+      hex: '#9a99dd'
     },
     id: 5
   },
   {
-    color: "softpink",
+    color: 'softpink',
     code: {
-      hex: "#dd99ba"
+      hex: '#dd99ba'
     },
     id: 6
   },
   {
-    color: "bisque",
+    color: 'bisque',
     code: {
-      hex: "#dd9a99"
+      hex: '#dd9a99'
     },
     id: 7
   },
   {
-    color: "softyellow",
+    color: 'softyellow',
     code: {
-      hex: "#dcdd99"
+      hex: '#dcdd99'
     },
     id: 8
   },
   {
-    color: "blanchedalmond",
+    color: 'blanchedalmond',
     code: {
-      hex: "#ffebcd"
+      hex: '#ffebcd'
     },
     id: 9
   },
   {
-    color: "blue",
+    color: 'blue',
     code: {
-      hex: "#6093ca"
+      hex: '#6093ca'
     },
     id: 10
   },
   {
-    color: "blueviolet",
+    color: 'black',
     code: {
-      hex: "#8a2be2"
+      hex: '#101010'
     },
-    id: 11
-  }
-];
+    id: 22
+  },
+]
 
-test("Fetches data and renders the bubbles", () => {
-  // Finish this test
-  render(<BubblePage colors={[]}/>)
-})
-test("Display episodes on prop change", ()=> {
-    const {rerender} =  render(<BubblePage colors={[]}/>)
+jest.mock('http://localhost:8000/api/colors')
+test("Fetches data and renders the bubbles", async () => {
+    render(<BubblePage colors={[]}/>)
+  const colors = getByText(/colors/i);
+  expect(getByText(/colors/i)).toBeInTheDocument();
 
-    rerender(<BubblePage colors={colors}/>)
+  expect(getByText(/bubbles/i)).toBeInTheDocument();
 
-            
-        
-    
-})
-
+});

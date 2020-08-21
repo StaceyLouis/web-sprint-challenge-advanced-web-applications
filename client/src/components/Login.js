@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from 'axios'
 import { useHistory } from 'react-router-dom';
+import axiosWithAuth from './utils/axiosWithAuth'
 
 
 class Login extends React.Component {
@@ -30,7 +31,7 @@ handleChange = evt => {
 
   loginSubmit = evt => {
     evt.preventDefault()
-    axios
+    axiosWithAuth()
       .post("http://localhost:8000/api/login", this.state.credentials
        
       )

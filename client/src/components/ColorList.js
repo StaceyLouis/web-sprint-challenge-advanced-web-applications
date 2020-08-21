@@ -4,13 +4,13 @@ import { useParams, useHistory } from 'react-router-dom'
 import  axiosWithAuth  from './utils/axiosWithAuth'
 
 
+
 const initialColor = {
   color: "",
   code: { hex: "" }
 };
 
 const ColorList = ({ colors, updateColors }) => {
-  console.log(colors);
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
   const { push } = useHistory();
