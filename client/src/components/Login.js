@@ -1,50 +1,75 @@
-import React, { useState } from 'react'
-import {axiosWithAuth  } from "../utils/axiosWithAuth";
+import React, { useState } from "react";
 import axios from 'axios'
+import { useHistory } from 'react-router-dom';
 
-const initialFormValues = {
-    username: '',
-    password:''
-}
-export function Login(props){
-    const [formValues, setFormValues]= useState(initialFormValues)
-    
-    const onSubmit =(e) => {
-        e.preventDefault();
-        axios
-        .post("http://localhost:5000/api/login", formValues)
-        .then(res=>{
-            localStorage.setItem('token', res.data.payload)
-            props.history.push('/bubble-page')
-        })
-        .catch(err =>{
-            console.log( err)
-        })
+
+class Login extends React.Component {
+  constructor(){
+    super()
+    this.state ={
+      credentials: {
+        username: "",
+        password: ""
+      }
     }
-        const onChange = (e) => {
-            setFormValues({
-                ...formValues,
-               
-                [e.target.name]: [e.target.value]
-            })
-        }
+  }
 
-    return(
-        <form onSubmit={onSubmit}>
-            <label htmlFor="username">Username: </label>
-            <input
+  // make a post request to retrieve a token from the api
+  // when you have handled the token, navigate to the BubblePage route
+
+handleChange = evt => {
+    const {name, value} = evt.target;
+    this.setState({
+      credentials: {
+        ...this.state.credentials,
+        [name]: value
+      }
+     
+    })
+  }
+
+  loginSubmit = evt => {
+    evt.preventDefault()
+    axios
+      .post("http://localhost:8000/api/login", this.state.credentials
+       
+      )
+      .then(res => {
+        console.log(res)
+        window.localStorage.setItem("token", res.data.payload);
+        this.props.history.push('/bubble-page')
+      })
+      .catch(err =>{
+        console.log("wrong route", err)
+      })
+
+  }
+render(){
+  return (
+    <div className="logging-in">
+      <form 
+        className="login-form"
+        onSubmit={this.loginSubmit}>
+          <label>Username</label>
+          <input 
             type="text"
-            value={formValues.username}
-            onChange={onChange}
-            name="username" />
-            <br/>
- <label htmlFor="password">Password: </label>
-            <input
-            type="text"
-            value={formValues.password}
-            onChange={onChange}
-            name="password" /> <br/>
-    <button type="submit">Login</button>
-        </form>
-    )
+            name="username"
+            value={this.state.credentials.username}
+            onChange={this.handleChange}
+            placeholder="your username"
+          />
+        <input 
+          type="password"
+          name="password"
+          value={this.state.credentials.password}
+          onChange={this.handleChange}
+          placeholder="your password"
+        />
+      <button>Login</button>
+      </form>
+    </div>
+  );
 }
+};
+
+export default Login;
